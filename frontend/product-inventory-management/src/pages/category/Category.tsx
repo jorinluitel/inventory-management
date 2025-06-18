@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createNewCategory } from "../../api/Category";
+import { Container, Fieldset, TextInput, Button, Group } from '@mantine/core';
 
 
 export default function Category(){
@@ -18,28 +19,35 @@ export default function Category(){
 
     return(
         <div>
-            <h1>Category </h1>
-            <div>
-                <input
-                    type="text"
-                    placeholder="Enter category name"
-                    value={categoryName}
-                    onChange={(e) => setCategoryName(e.target.value)}
-                />
-                <input
-                type="text"
-                placeholder="Enter category description"
-                value={categoryDescription}
-                onChange={(e) => setCategoryDescription(e.target.value)}
-                />
-                <button
-                onClick={handleAddCategory}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >
-                {" "}
-                Add Category
-                </button>
-            </div>
+            <h1>Categories Page</h1>
+            <Container size="xs">
+                <Fieldset legend="Add Category">
+                    <TextInput
+                        label="Category Name"
+                        type="text"
+                        placeholder="Enter category name"
+                        value={categoryName}
+                        onChange={(e) => setCategoryName(e.target.value)}
+                    />
+                    <TextInput
+                        label="Category Description"
+                        type="text"
+                        placeholder="Enter category description"
+                        value={categoryDescription}
+                        onChange={(e) => setCategoryDescription(e.target.value)}
+                        mt="md"
+                    />
+                    <Group justify="flex-end" mt="md">
+
+                        <Button
+                        onClick={handleAddCategory}
+                        >
+                        {" "}
+                            Add Category
+                        </Button>
+                    </Group>
+                </Fieldset>
+            </Container>
         </div>
     );
 }
