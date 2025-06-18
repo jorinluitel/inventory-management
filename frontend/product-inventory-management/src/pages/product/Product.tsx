@@ -8,6 +8,7 @@ import {
 } from "../../api/product.ts";
 import { Button, Modal } from "@mantine/core";
 import { AddProductModal } from "../../components/AddProductModal.tsx";
+import { FileInput } from '@mantine/core';
 
 export default function Product() {
   const [listOfCategory, setListOfCategory] = useState<any>([]);
@@ -73,13 +74,12 @@ export default function Product() {
     console.log("created successfully");
   }
 
-  // async function handleFileChange(e: any) {
-  //   const file = e.target.files[0];
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   const data = await uploadProductImage(formData);
-  //   console.log(data);
-  // }
+  async function handleFileChange(file: any) {
+    const formData = new FormData();
+    formData.append("file", file);
+    const data = await uploadProductImage(formData);
+    console.log(data);
+  }
 
   return (
     <div>
@@ -161,9 +161,13 @@ export default function Product() {
               </option>
             ))}
           </select>
-          {/* <div className="input-group">
-          <input id="file" type="file" onChange={handleFileChange} />
-        </div> */}
+
+          <FileInput
+            label="Select Product Image"
+            placeholder="Input placeholder"
+            onChange={handleFileChange}
+          />
+          
           {isEditMode ? (
             <button
               className="bg-green-500 text-white px-2 py-1 rounded-md"
