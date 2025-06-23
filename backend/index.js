@@ -7,6 +7,7 @@ import "dotenv/config";
 import multer from "multer";
 
 import categoryRouter from "./routes/category.js";
+import userRouter from "./routes/users.js";
 import Users from "./model/Users.model.js";
 import Product from "./model/Product.model.js";
 import Category from "./model/Category.model.js";
@@ -29,18 +30,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// app.use("/category", categoryRouter);
+ app.use("/category", categoryRouter);
+ app.use("/user", userRouter);
 
-app.get("/category", async (req, res) => {
-  const categories = await Category.find();
-  res.send(categories);
-});
+app.get("/login", async (req, res) => {
 
-app.post("/category", async (req, res) => {
-  const category = req.body;
-  const newCategory = new Category(category);
-  await newCategory.save();
-  res.send(newCategory);
 });
 
 app.get("/users", async function (req, res) {

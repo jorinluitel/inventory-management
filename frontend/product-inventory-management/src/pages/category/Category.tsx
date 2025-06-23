@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createNewCategory } from "../../api/Category";
+import { createNewCategory } from "../../api/category.ts";
 import { Container, Fieldset, TextInput, Button, Group } from '@mantine/core';
 
 
