@@ -1,11 +1,7 @@
 import { TextInput, PasswordInput, Button, Group } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useNavigate } from "react-router";
-
-const USER = {
-    email: "john@gmail.com",
-    password: "admin"
-}
+import { logIn } from "../../api/auth";
 
 export default function Login() {
     const form = useForm({
@@ -15,23 +11,22 @@ export default function Login() {
           password: '',
           termsOfService: false,
         },
-        // validate: {
-        //     email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-        //     password: (value) => (value.length < 6 ? 'Password must be at least 6 characters long' : null),
-        // },
+        validate: {
+            email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+            password: (value) => (value.length < 6 ? 'Password must be at least 6 characters long' : null),
+        },
     });
 
     const navigate = useNavigate();
 
-    const handleSubmit = (values: any) => {
-        console.log(values);
-
-        if (values.email === USER.email && values.password === USER.password){
-            console.log("login successful");
-            localStorage.setItem("token", "1234");
-            navigate("/dashboard")
-        } else {
-            console.log("error");
+    const handleSubmit = async (values: any) => {
+        const response = await logIn(values);
+        console.log(response, "@login response")
+        if( response.accessToken.length){
+            localStorage.setItem("token", response.accessToken);
+            navigate("/Dashboard");     
+        } else{
+            console.log("cannot login")
         }
     };
 

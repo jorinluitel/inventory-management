@@ -50,14 +50,14 @@ export function AddProductModal({ isModalOpen, setIsModalOpen, getProducts, list
         setProductCategory("");
     }
 
-    function handleEditProduct(product: any) {
-        setIsEditMode(true);
-        setCurrentProductId(product._id);
-        setProductName(product.name);
-        setProductDescription(product.description);
-        setProductPrice(product.price);
-        setProductCategory(product.category._id);
-    }
+    // function handleEditProduct(product: any) {
+    //     setIsEditMode(true);
+    //     setCurrentProductId(product._id);
+    //     setProductName(product.name);
+    //     setProductDescription(product.description);
+    //     setProductPrice(product.price);
+    //     setProductCategory(product.category._id);
+    // }
 
   return (
     <Modal
@@ -71,18 +71,21 @@ export function AddProductModal({ isModalOpen, setIsModalOpen, getProducts, list
           <Input
             type="text"
             placeholder="Enter Product Name"
+            className="my-2"
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
           />
           <Input
             type="text"
             placeholder="Enter Product Description"
+            className="my-2"
             value={productDescription}
             onChange={(e) => setProductDescription(e.target.value)}
           />
           <Input
             type="number"
             placeholder="Enter Product Price"
+            className="my-2"
             value={productPrice}
             onChange={(e) => {
               console.log(e.target.value);

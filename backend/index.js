@@ -8,9 +8,11 @@ import multer from "multer";
 
 import categoryRouter from "./routes/category.js";
 import userRouter from "./routes/users.js";
+import authRouter from "./routes/auth.js";
 import Users from "./model/Users.model.js";
 import Product from "./model/Product.model.js";
 import Category from "./model/Category.model.js";
+import { verifyAuth } from "./middleware/verify.auth.js";
 
 const app = express();
 
@@ -32,6 +34,7 @@ const upload = multer({ storage });
 
  app.use("/category", categoryRouter);
  app.use("/user", userRouter);
+ app.use("/auth", authRouter);
 
 app.get("/login", async (req, res) => {
 
@@ -69,14 +72,14 @@ app.delete("/user-delete/:id", async (req, res) => {
   console.log(req.params.id);
 });
 
-app.post("/product", async (req, res) => {
+app.post("/product", verifyAuth, async (req, res) => {
   const product = req.body;
   const newProduct = new Product(product);
   await newProduct.save();
   res.send(newProduct);
 });
 
-app.get("/product", async (req, res) => {
+app.get("/product", verifyAuth, async (req, res) => {
   const products = await Product.find().populate("category");
   res.send(products);
 });
@@ -84,14 +87,6 @@ app.get("/product", async (req, res) => {
 app.put("/product/:id", async (req, res) => {
   console.log(req, "@request");
   const { id } = req.params;
-  /**
-   * {
-   *  name: "new name",
-   * description: "new description",
-   * price: 100,
-   * category: asdfasdf,
-   * }
-   */
   const updatedProduct = await Product.findByIdAndUpdate(
     req.params.id,
     req.body,
